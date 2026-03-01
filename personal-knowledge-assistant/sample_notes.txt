@@ -1,0 +1,193 @@
+Machine Learning Fundamentals - Semester Notes
+===============================================
+Course: CS 4892 | Professor: Dr. Smith | Fall 2024
+
+CHAPTER 1: Introduction to Machine Learning
+--------------------------------------------
+
+Machine learning is a subset of artificial intelligence that enables systems to learn
+and improve from experience without being explicitly programmed. The key idea is to
+give computers the ability to learn from data, identify patterns, and make decisions
+with minimal human intervention.
+
+There are three main types of machine learning:
+
+1. SUPERVISED LEARNING
+   In supervised learning, the algorithm is trained on a labeled dataset — meaning
+   each input has a corresponding output. The model learns to map inputs to outputs.
+   Examples: Linear regression, Decision trees, Support Vector Machines (SVM),
+   Neural networks.
+   Use cases: Email spam detection, house price prediction, image classification.
+
+2. UNSUPERVISED LEARNING
+   The algorithm is given data WITHOUT labels and must find hidden patterns or
+   intrinsic structures. No ground truth is provided.
+   Examples: K-means clustering, Principal Component Analysis (PCA), Autoencoders.
+   Use cases: Customer segmentation, anomaly detection, dimensionality reduction.
+
+3. REINFORCEMENT LEARNING
+   An agent learns to make decisions by interacting with an environment. It receives
+   rewards for good actions and penalties for bad ones — learning a policy that
+   maximizes cumulative reward over time.
+   Examples: Q-learning, PPO, A3C algorithms.
+   Use cases: Game playing (AlphaGo), robotics, autonomous vehicles.
+
+CHAPTER 2: Neural Networks and Deep Learning
+---------------------------------------------
+
+A neural network is a computational model inspired by the structure of the biological
+brain. It consists of layers of interconnected nodes (neurons).
+
+KEY COMPONENTS:
+- Input layer: Receives raw data (pixels, text tokens, features)
+- Hidden layers: Extract increasingly abstract representations
+- Output layer: Produces predictions (class probabilities, regression values)
+- Activation functions: Introduce non-linearity (ReLU, Sigmoid, Tanh, Softmax)
+- Weights and biases: Parameters learned during training
+
+BACKPROPAGATION:
+The training algorithm for neural networks. It computes gradients of the loss function
+with respect to each weight using the chain rule of calculus, then updates weights
+using gradient descent to minimize loss.
+
+Loss = (1/n) * Σ (y_pred - y_true)²    [Mean Squared Error for regression]
+Loss = -Σ y_true * log(y_pred)           [Cross-Entropy for classification]
+
+DEEP LEARNING refers to neural networks with many hidden layers. Deep networks can
+learn hierarchical representations — e.g., in image recognition: edges → shapes →
+objects → scenes.
+
+CHAPTER 3: Transformers and Attention Mechanism
+------------------------------------------------
+
+The Transformer architecture (Vaswani et al., 2017 — "Attention is All You Need")
+revolutionized NLP and is now the foundation of modern AI systems like GPT, BERT, T5.
+
+THE ATTENTION MECHANISM:
+Attention allows the model to focus on different parts of the input when producing
+each part of the output. Instead of compressing the entire input into a fixed vector,
+attention dynamically weights which tokens to focus on.
+
+Self-Attention formula:
+    Attention(Q, K, V) = softmax(QK^T / √d_k) * V
+
+Where:
+    Q = Query matrix (what we're looking for)
+    K = Key matrix (what each token "offers")
+    V = Value matrix (the actual content)
+    d_k = dimension of keys (scaling factor to prevent gradient vanishing)
+
+MULTI-HEAD ATTENTION:
+Instead of one attention mechanism, transformers use multiple "heads" in parallel,
+each learning to attend to different aspects of the input:
+    MultiHead(Q,K,V) = Concat(head₁, ..., head_h) * W_O
+
+This allows the model to simultaneously attend to positional information,
+syntactic relationships, and semantic content.
+
+POSITIONAL ENCODING:
+Since Transformers process all tokens simultaneously (unlike RNNs), they need to
+inject positional information:
+    PE(pos, 2i)   = sin(pos / 10000^(2i/d_model))
+    PE(pos, 2i+1) = cos(pos / 10000^(2i/d_model))
+
+CHAPTER 4: Natural Language Processing (NLP)
+--------------------------------------------
+
+NLP is the field of AI concerned with enabling computers to understand, interpret,
+and generate human language.
+
+KEY TASKS:
+- Text classification: Sentiment analysis, spam detection, topic labeling
+- Named Entity Recognition (NER): Identifying people, places, organizations
+- Question Answering: Finding answers to questions from text passages
+- Machine Translation: English → French, English → Chinese
+- Text Summarization: Extractive vs. Abstractive summarization
+- Language Generation: Completing or generating text
+
+WORD EMBEDDINGS:
+Converting words to dense vector representations that capture semantic meaning.
+- Word2Vec: Predicts surrounding words (CBOW) or center word (Skip-gram)
+- GloVe: Uses global co-occurrence statistics
+- Contextual embeddings (BERT): Word meaning varies based on context
+
+"Bank" in "river bank" has a different vector than "bank" in "savings bank"
+— this context-sensitivity is a key advantage of transformer-based embeddings.
+
+CHAPTER 5: Model Evaluation Metrics
+-------------------------------------
+
+Choosing the right evaluation metric is crucial — optimizing the wrong metric leads
+to models that look good on paper but fail in practice.
+
+FOR CLASSIFICATION:
+- Accuracy = (TP + TN) / (TP + TN + FP + FN)
+  Problem: Misleading for imbalanced datasets (99% accuracy on 99% negative class)
+- Precision = TP / (TP + FP)  [When false positives are costly]
+- Recall = TP / (TP + FN)     [When false negatives are costly]
+- F1 Score = 2 * (Precision * Recall) / (Precision + Recall)
+- AUC-ROC: Area under the Receiver Operating Characteristic curve
+
+FOR REGRESSION:
+- MAE: Mean Absolute Error — robust to outliers
+- RMSE: Root Mean Square Error — penalizes large errors more
+- R²: Proportion of variance explained by the model (1.0 = perfect)
+
+FOR NLP:
+- BLEU score: For machine translation quality
+- ROUGE: For summarization quality
+- Perplexity: For language models (lower = better)
+
+CHAPTER 6: Overfitting and Regularization
+------------------------------------------
+
+OVERFITTING: Model performs well on training data but poorly on unseen data.
+The model has "memorized" training examples rather than learned general patterns.
+
+Signs: Training accuracy >> Validation accuracy, loss diverges after many epochs.
+
+REGULARIZATION TECHNIQUES:
+1. L1 Regularization (Lasso): Adds |weights| to loss → sparse weights, feature selection
+2. L2 Regularization (Ridge): Adds weights² to loss → smaller weights, prevents extremes
+3. Dropout: Randomly "drops" neurons during training → prevents co-adaptation
+4. Early Stopping: Stop training when validation loss stops improving
+5. Data Augmentation: Create more training data via transformations
+6. Batch Normalization: Normalizes layer inputs → stabilizes and speeds up training
+
+BIAS-VARIANCE TRADEOFF:
+- High Bias (Underfitting): Model too simple, misses important patterns
+- High Variance (Overfitting): Model too complex, fits noise in training data
+- Sweet spot: Balance complexity with generalization ability
+
+CHAPTER 7: Retrieval-Augmented Generation (RAG)
+-------------------------------------------------
+
+RAG is a technique that combines information retrieval with language generation.
+Instead of relying solely on a language model's parametric knowledge (baked into
+weights), RAG retrieves relevant documents at query time to ground the response.
+
+RAG PIPELINE:
+1. Indexing: Documents are chunked, embedded, and stored in a vector database
+2. Retrieval: Query is embedded and used to find similar chunks via nearest neighbor
+3. Generation: Retrieved chunks are passed as context to the LLM for answer generation
+
+WHY RAG?
+- Reduces hallucination by grounding answers in real documents
+- Enables knowledge updates without retraining the LLM
+- Provides source citations for answers
+- Works with private/proprietary documents
+
+VECTOR DATABASES (e.g., Endee, Pinecone, Qdrant, Weaviate):
+Store dense vector embeddings and support fast similarity search.
+Key operation: kNN (k-Nearest Neighbors) search using cosine or dot-product similarity.
+
+COSINE SIMILARITY:
+    cos(θ) = (A · B) / (|A| * |B|)
+
+Range: [-1, 1] where 1 = identical direction, 0 = orthogonal, -1 = opposite.
+For normalized vectors, cosine similarity equals dot product.
+
+END OF NOTES
+============
+These notes cover the core topics for the midterm. Review chapters 2 and 3 carefully
+as the transformer architecture questions tend to be detailed.
