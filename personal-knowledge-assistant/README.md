@@ -303,8 +303,8 @@ This is why Endee is the most critical component of this RAG system.
 
 | Resource | URL |
 |---|---|
-| 📦 This Project | https://github.com/\<your-username\>/endee/tree/master/personal-knowledge-assistant |
-| 🍴 Forked Endee Repo | https://github.com/\<your-username\>/endee |
+| 📦 This Project | https://github.com/Aryan132004/endee/tree/master/personal-knowledge-assistant |
+| 🍴 Forked Endee Repo | https://github.com/Aryan132004/endee |
 | ⭐ Original Endee Repo | https://github.com/endee-io/endee |
 | 📖 Endee Docs | https://docs.endee.io |
 | 🤖 Gemini API Keys | https://aistudio.google.com/app/apikeys |
